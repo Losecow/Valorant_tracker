@@ -77,7 +77,7 @@ public class ValorantManager implements ICRUD {
     public void printData() {
         System.out.println("총 " + list.size() + "개의 게임 플레이 기록이 있습니다.");
         System.out.println("=======================================================================");
-        System.out.println(" No |    날짜    |  요원  |    맵    |  K/D/A  | 헤드샷(%) | TRS ");
+        System.out.println(" No |    날짜    |  요원   |     맵     |    K/D/A    | 헤드샷(%) | TRS ");
         System.out.println("-----------------------------------------------------------------------");
         int i = 1;
         for (Valorant item : list) {
@@ -158,7 +158,7 @@ public class ValorantManager implements ICRUD {
     public void searchByDate(String date) {
         int count = 0;
         System.out.println("=======================================================================");
-        System.out.println(" No |    날짜    |  요원  |    맵    |  K/D/A  | 헤드샷(%) | TRS ");
+        System.out.println(" No |    날짜    |  요원   |     맵     |    K/D/A    | 헤드샷(%) | TRS ");
         System.out.println("-----------------------------------------------------------------------");
         
         for (int i = 0; i < list.size(); i++) {
@@ -278,7 +278,7 @@ public class ValorantManager implements ICRUD {
         // count // 헤드샷 비율이 최소 헤드샷 비율 이상인 기록 개수
         int count = 0;
         System.out.println("=======================================================================");
-        System.out.println(" No |    날짜    |  요원  |    맵    |  K/D/A  | 헤드샷(%) | TRS ");
+        System.out.println(" No |    날짜    |  요원   |     맵     |    K/D/A    | 헤드샷(%) | TRS ");
         System.out.println("-----------------------------------------------------------------------");
         
         for (int i = 0; i < list.size(); i++) {
