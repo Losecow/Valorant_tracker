@@ -1,6 +1,11 @@
 package src;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ValorantManager implements ICRUD {
@@ -161,6 +166,104 @@ public class ValorantManager implements ICRUD {
         
         System.out.println("=======================================================================");
         System.out.println("총 " + count + "건 검색됨.");
+        System.out.println("=======================================================================");
+    }
+
+    // 부가기능 2: 게임 플레이 기록 통계 (가장 많이 플레이한 요원, 맵, 평균 KDA, 평균 헤드샷 비율)
+    public void showGamePlayStatistics() {
+        if (list.isEmpty()) {
+            System.out.println("데이터가 없습니다.");
+            return;
+        }
+
+        // 1. 요원별 / 맵별 플레이 횟수 카운트
+        // HashMap 설명 : 키와 값의 쌍으로 이루어진 데이터를 저장하는 자료구조 (Key는 중복 불가능, Value는 중복 가능)
+        // 예: Map<String, Integer> agentCount = new HashMap<>(); // 요원 이름을 키로, 플레이 횟수를 값으로 저장
+        // 예: agentCount.put("요원 이름", 플레이 횟수); // 요원 이름을 키로, 플레이 횟수를 값으로 저장 (이미 있으면 값을 증가)
+        // 예: agentCount.get("요원 이름"); // 요원 이름을 키로, 플레이 횟수를 값으로 가져옴 (이미 있으면 값을 반환)
+        // 예: agentCount.getOrDefault("요원 이름", 0); // 요원 이름을 키로, 플레이 횟수를 값으로 가져옴 (이미 있으면 값을 반환, 없으면 0을 반환)
+        // 예: agentCount.putIfAbsent("요원 이름", 플레이 횟수); // 요원 이름을 키로, 플레이 횟수를 값으로 저장 (이미 있으면 값을 증가하지 않음)
+        Map<String, Integer> agentCount = new HashMap<>();
+        Map<String, Integer> mapCount = new HashMap<>();
+        
+        // 2. 전체 평균을 위한 합계 변수
+        // totalKill // 전체 킬 합계
+        // totalDeath // 전체 데스 합계
+        // totalAssist // 전체 어시스트 합계
+        // totalHeadshotPercentage // 전체 헤드샷 비율 합계
+        int totalKill = 0;
+        int totalDeath = 0;
+        int totalAssist = 0;
+        int totalHeadshotPercentage = 0;
+
+        for (Valorant item : list) {
+            // 카운트 누적
+            // 요원별 플레이 횟수 카운트
+            agentCount.put(item.getName(), agentCount.getOrDefault(item.getName(), 0) + 1); // 요원 이름을 키로, 플레이 횟수를 값으로 저장 (이미 있으면 값을 증가)
+            // 맵별 플레이 횟수 카운트
+            mapCount.put(item.getMap(), mapCount.getOrDefault(item.getMap(), 0) + 1); // 맵 이름을 키로, 플레이 횟수를 값으로 저장 (이미 있으면 값을 증가)
+            
+            // KDA 및 헤드샷 합계 누적
+            totalKill += item.getKill(); // 전체 킬 합계
+            totalDeath += item.getDeath(); // 전체 데스 합계
+            totalAssist += item.getAssist(); // 전체 어시스트 합계
+            totalHeadshotPercentage += item.getHeadshotPercentage(); // 전체 헤드샷 비율 합계
+        }
+
+        // 가장 많이 플레이한 요원 찾기
+        // mostPlayedAgent // 가장 많이 플레이한 요원
+        // maxAgentCount // 가장 많이 플레이한 요원의 플레이 횟수
+        // entry // 요원 이름을 키로, 플레이 횟수를 값으로 가져옴
+        // entry.getValue() // 플레이 횟수
+        // entry.getKey() // 요원 이름
+        // entry.getValue() > maxAgentCount // 플레이 횟수가 가장 많은 요원 찾기
+        // maxAgentCount = entry.getValue(); // 플레이 횟수를 가장 많은 요원의 플레이 횟수로 설정
+        // mostPlayedAgent = entry.getKey(); // 요원 이름을 가장 많이 플레이한 요원으로 설정
+        String mostPlayedAgent = "";
+        int maxAgentCount = 0;
+        for (Map.Entry<String, Integer> entry : agentCount.entrySet()) {
+            if (entry.getValue() > maxAgentCount) {
+                maxAgentCount = entry.getValue();
+                mostPlayedAgent = entry.getKey();
+            }
+        }
+
+        // 가장 많이 플레이한 맵 찾기
+        // mostPlayedMap // 가장 많이 플레이한 맵
+        // maxMapCount // 가장 많이 플레이한 맵의 플레이 횟수
+        // entry // 맵 이름을 키로, 플레이 횟수를 값으로 가져옴
+        // entry.getValue() // 플레이 횟수
+        // entry.getKey() // 맵 이름
+        // entry.getValue() > maxMapCount // 플레이 횟수가 가장 많은 맵 찾기
+        // maxMapCount = entry.getValue(); // 플레이 횟수를 가장 많은 맵의 플레이 횟수로 설정
+        // mostPlayedMap = entry.getKey(); // 맵 이름을 가장 많이 플레이한 맵으로 설정
+        String mostPlayedMap = "";
+        int maxMapCount = 0;
+        for (Map.Entry<String, Integer> entry : mapCount.entrySet()) {
+            if (entry.getValue() > maxMapCount) {
+                maxMapCount = entry.getValue();
+                mostPlayedMap = entry.getKey();
+            }
+        }
+
+        // 평균 계산 (소수점 첫째 자리까지)
+        // totalGames // 전체 플레이 판수
+        // avgKill // 전체 킬 평균
+        // avgDeath // 전체 데스 평균
+        // avgAssist // 전체 어시스트 평균
+        // avgHeadshot // 전체 헤드샷 비율 평균
+        int totalGames = list.size();
+        double avgKill = (double) totalKill / totalGames;
+        double avgDeath = (double) totalDeath / totalGames;
+        double avgAssist = (double) totalAssist / totalGames;
+        double avgHeadshot = (double) totalHeadshotPercentage / totalGames;
+
+        System.out.println("============================발로란트 플레이 통계============================");
+        System.out.println("총 플레이 판수: " + totalGames + "판");
+        System.out.println("가장 많이 플레이한 요원: " + mostPlayedAgent + " (" + maxAgentCount + "회)");
+        System.out.println("가장 많이 플레이한 맵: " + mostPlayedMap + " (" + maxMapCount + "회)");
+        System.out.printf("평균 K/D/A: %.1f / %.1f / %.1f\n", avgKill, avgDeath, avgAssist);
+        System.out.printf("평균 헤드샷 비율: %.1f%%\n", avgHeadshot);
         System.out.println("=======================================================================");
     }
 

@@ -20,7 +20,7 @@ public class Main {
             System.out.println("3. 게임 플레이 기록 수정 (Update)");
             System.out.println("4. 게임 플레이 기록 삭제 (Delete)");
             System.out.println("5. 게임 플레이 기록 검색 (Search)");
-            // System.out.println("6. 게임 플레이 기록 통계 (Most/Min 정렬)");
+            System.out.println("6. 게임 플레이 기록 통계 (Most/Min 정렬)");
             // System.out.println("7. 일별 헤드샷 비율 필터링 (Filter)");
             // System.out.println("8. 파일에 저장 (Save)");
             System.out.println("0. 종료 (Quit)");
@@ -61,9 +61,9 @@ public class Main {
                     String date = sc.nextLine().trim();
                     manager.searchByDate(date);
                     break;
-                // case 6:
-                //     manager.showGamePlayStatistics();
-                //     break;
+                case 6:
+                    manager.showGamePlayStatistics();
+                    break;
                 // case 7:
                 //     manager.filterByHeadshotRate();
                 //     break;
