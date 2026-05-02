@@ -1,5 +1,8 @@
 package src;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -265,6 +268,92 @@ public class ValorantManager implements ICRUD {
         System.out.printf("평균 K/D/A: %.1f / %.1f / %.1f\n", avgKill, avgDeath, avgAssist);
         System.out.printf("평균 헤드샷 비율: %.1f%%\n", avgHeadshot);
         System.out.println("=======================================================================");
+    }
+
+    // 부가기능 3: 헤드샷 비율 필터링 (입력한 비율 이상인 기록만 출력)
+    public void filterByHeadshotRate(int minHeadshot) {
+
+        // minHeadshot // 최소 헤드샷 비율
+        // count // 헤드샷 비율이 최소 헤드샷 비율 이상인 기록 개수
+        int count = 0;
+        System.out.println("=======================================================================");
+        System.out.println(" No |    날짜    |  요원  |    맵    |  K/D/A  | 헤드샷(%) | TRS ");
+        System.out.println("-----------------------------------------------------------------------");
+        
+        for (int i = 0; i < list.size(); i++) {
+            // 헤드샷 비율이 최소 헤드샷 비율 이상인 기록 출력
+            if (list.get(i).getHeadshotPercentage() >= minHeadshot) {
+                System.out.printf("%-3d |%s\n", (i + 1), list.get(i).toString());
+                count++;
+            }
+        }
+        
+        System.out.println("=======================================================================");
+        System.out.println("헤드샷 " + minHeadshot + "% 이상인 기록: 총 " + count + "건");
+        System.out.println("=======================================================================");
+    }
+    
+    // 부가기능 4: 파일 저장
+    public void saveFile() {
+
+        // 파일 저장 
+        try {
+            // PrintWriter // 파일 출력 스트림 (파일 쓰기 용)
+            // new PrintWriter(FILE_NAME) // FILE_NAME 파일에 출력
+            PrintWriter pw = new PrintWriter(FILE_NAME);
+            for (Valorant item : list) {
+                // toFileString() // 파일 저장을 위한 문자열 포맷 (Valorant 클래스에서 정의)
+                pw.println(item.toFileString());
+            }
+            // close() // 파일 출력 스트림 닫기
+            pw.close();
+            System.out.println("데이터가 파일에 저장되었습니다.");
+        // FileNotFoundException // 파일을 찾을 수 없을 때 발생하는 예외 
+        } catch (FileNotFoundException e) {
+            System.out.println("파일 저장 중 오류가 발생했습니다.");
+        }
+    }
+
+    // 부가기능 5: 파일 불러오기
+    public void loadFile() {
+
+        // 파일 존재 여부 확인
+        try {
+            File file = new File(FILE_NAME);
+            if (!file.exists()) return; // 파일이 없으면 종료
+            
+            // Scanner // 파일 입력 스트림 (파일 읽기 용)
+            // new Scanner(file) // FILE_NAME 파일에서 읽기
+            Scanner fileScanner = new Scanner(file);
+            // hasNextLine() // 파일에 다음 줄이 있는지 확인
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+                // split() // 문자열을 구분자로 분리 (|를 구분자로 분리)
+                String[] parts = line.split("\\|");
+                // 파일 데이터 형식이 맞는지 확인 (필드 8개)
+                if (parts.length == 8) {
+                    // Valorant 객체 생성
+                    Valorant valorant = new Valorant(
+                        parts[0], // name
+                        parts[1], // map
+                        Integer.parseInt(parts[2]), // kill
+                        Integer.parseInt(parts[3]), // death
+                        Integer.parseInt(parts[4]), // assist
+                        Integer.parseInt(parts[5]), // headshotPercentage
+                        parts[6], // gameDate
+                        Integer.parseInt(parts[7])  // trs
+                    );
+                    // list.add(valorant) // Valorant 객체를 리스트에 추가
+                    list.add(valorant);
+                }
+            }
+            // close() // 파일 입력 스트림 닫기
+            fileScanner.close();
+            System.out.println("파일에서 데이터를 불러왔습니다.");
+        // FileNotFoundException // 파일을 찾을 수 없을 때 발생하는 예외 
+        } catch (FileNotFoundException e) {
+            System.out.println("파일을 찾을 수 없습니다.");
+        }
     }
 
 }

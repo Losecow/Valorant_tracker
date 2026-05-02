@@ -55,4 +55,18 @@ public class Valorant {
                 gameDate, name, map, kda, headshotPercentage, trs);
     }
 
+    // 파일 저장을 위한 문자열 포맷 (StringBuilder 활용)
+    public String toFileString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(name).append("|")
+          .append(map).append("|")
+          .append(kill).append("|")
+          .append(death).append("|")
+          .append(assist).append("|")
+          .append(headshotPercentage).append("|")
+          .append(gameDate).append("|")
+          .append(trs);
+        return sb.toString();
+    }
+
 }
