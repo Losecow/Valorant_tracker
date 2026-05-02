@@ -139,5 +139,9 @@ public class ValorantManager implements ICRUD {
             return;
         }
         list.remove(no - 1);
+
+        System.out.println("삭제되었습니다.");
+        System.out.println("========================================================================================");
     }
+
 }
