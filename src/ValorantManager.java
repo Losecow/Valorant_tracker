@@ -262,7 +262,7 @@ public class ValorantManager implements ICRUD {
         double avgAssist = (double) totalAssist / totalGames;
         double avgHeadshot = (double) totalHeadshotPercentage / totalGames;
 
-        System.out.println("============================발로란트 플레이 통계============================");
+        System.out.println("==========================발로란트 플레이 통계=========================");
         System.out.println("총 플레이 판수: " + totalGames + "판");
         System.out.println("가장 많이 플레이한 요원: " + mostPlayedAgent + " (" + maxAgentCount + "회)");
         System.out.println("가장 많이 플레이한 맵: " + mostPlayedMap + " (" + maxMapCount + "회)");
@@ -350,16 +350,16 @@ public class ValorantManager implements ICRUD {
             }
             // close() // 파일 입력 스트림 닫기
             fileScanner.close();
-            System.out.println("================================================================");
+            System.out.println("=======================================================================");
             System.out.println("파일 불러오기를 시작합니다 ...");
             System.out.println("파일에서 데이터를 불러왔습니다.");
-            System.out.println("================================================================");
+            System.out.println("=======================================================================");
         // FileNotFoundException // 파일을 찾을 수 없을 때 발생하는 예외 
         } catch (FileNotFoundException e) {
-            System.out.println("================================================================");
+            System.out.println("=======================================================================");
             System.out.println("파일 불러오기를 시작합니다 ...");
             System.out.println("파일을 찾을 수 없습니다.");
-            System.out.println("================================================================");
+            System.out.println("=======================================================================");
         }
     }
 
