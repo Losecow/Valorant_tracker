@@ -70,6 +70,7 @@ public class Main {
                     manager.filterByHeadshotRate(minHeadshot);
                     break;
                 case 8:
+                    System.out.println("파일 저장을 시작합니다 ...");
                     manager.saveFile();
                     break;
                 case 0:

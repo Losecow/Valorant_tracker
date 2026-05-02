@@ -21,6 +21,11 @@ public class ValorantManager implements ICRUD {
     // 생성자
     public ValorantManager(Scanner sc) {
         this.sc = sc;
+        loadFile();
+        System.out.println("================================================================");
+        System.out.println("파일 불러오기를 시작합니다 ...");
+        System.out.println("파일에서 데이터를 불러왔습니다.");
+        System.out.println("================================================================");
     }
 
     @Override
