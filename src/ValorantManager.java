@@ -87,7 +87,47 @@ public class ValorantManager implements ICRUD {
             return;
         }
         
+        // for문을 돌리지 않고 list.get(no - 1)을 사용해 한 번에 데이터를 가져옴 (ArrayList 사용이유)
         Valorant valorant = list.get(no - 1);
+        
+        System.out.println("수정할 데이터를 입력해주세요.");
+        System.out.println("========================================================================================");
+
+        System.out.print("새 요원 이름 (" + valorant.getName() + "): ");
+        String name = sc.nextLine().trim();
+        // 수정할 데이터가 비어있지 않으면 수정하고 비어있으면 기존 데이터 유지
+        if (!name.isEmpty()) valorant.setName(name);
+
+        System.out.print("새 맵 (" + valorant.getMap() + "): ");
+        String map = sc.nextLine().trim();
+        if (!map.isEmpty()) valorant.setMap(map);
+
+        System.out.print("새 Kill (" + valorant.getKill() + "): ");
+        String killStr = sc.nextLine().trim();
+        if (!killStr.isEmpty()) valorant.setKill(Integer.parseInt(killStr));
+
+        System.out.print("새 Death (" + valorant.getDeath() + "): ");
+        String deathStr = sc.nextLine().trim();
+        if (!deathStr.isEmpty()) valorant.setDeath(Integer.parseInt(deathStr));
+
+        System.out.print("새 Assist (" + valorant.getAssist() + "): ");
+        String assistStr = sc.nextLine().trim();
+        if (!assistStr.isEmpty()) valorant.setAssist(Integer.parseInt(assistStr));
+
+        System.out.print("새 헤드샷 퍼센테이지 (" + valorant.getHeadshotPercentage() + "): ");
+        String headshotPercentageStr = sc.nextLine().trim();
+        if (!headshotPercentageStr.isEmpty()) valorant.setHeadshotPercentage(Integer.parseInt(headshotPercentageStr));
+
+        System.out.print("새 날짜 (" + valorant.getGameDate() + "): ");
+        String gameDate = sc.nextLine().trim();
+        if (!gameDate.isEmpty()) valorant.setGameDate(gameDate);
+
+        System.out.print("새 TRS (" + valorant.getTrs() + "): ");
+        String trsStr = sc.nextLine().trim();
+        if (!trsStr.isEmpty()) valorant.setTrs(Integer.parseInt(trsStr));
+
+        System.out.println("수정되었습니다.");
+        System.out.println("========================================================================================");
     }
 
     // 게임 플레이 기록 삭제
