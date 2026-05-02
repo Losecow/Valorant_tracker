@@ -6,7 +6,6 @@ public class Valorant {
     private int kill;
     private int death;
     private int assist;
-    private int headshot;
     private int headshotPercentage;
     private String gameDate;
     private int trs; // Tracker Score
@@ -14,13 +13,12 @@ public class Valorant {
     public Valorant() {
     }
 
-    public Valorant(String name, String map, int kill, int death, int assist, int headshot, int headshotPercentage, String gameDate, int trs) {
+    public Valorant(String name, String map, int kill, int death, int assist, int headshotPercentage, String gameDate, int trs) {
         this.name = name;
         this.map = map;
         this.kill = kill;
         this.death = death;
         this.assist = assist;
-        this.headshot = headshot;
         this.headshotPercentage = headshotPercentage;
         this.gameDate = gameDate;
         this.trs = trs;
@@ -41,9 +39,6 @@ public class Valorant {
     public int getAssist() { return assist; }
     public void setAssist(int assist) { this.assist = assist; }
 
-    public int getHeadshot() { return headshot; }
-    public void setHeadshot(int headshot) { this.headshot = headshot; }
-
     public int getTrs() { return trs; }
     public void setTrs(int trs) { this.trs = trs; }
 
@@ -55,8 +50,8 @@ public class Valorant {
 
     @Override
     public String toString() {
-        return String.format("[%s] 요원: %s | 맵: %s | K/D/A: %d/%d/%d | 헤드샷: %d회 (%d%%) | TRS: %d", 
-                gameDate, name, map, kill, death, assist, headshot, headshotPercentage, trs);
+        return String.format("[%s] 요원: %s | 맵: %s | K/D/A: %d/%d/%d | 헤드샷: %d%% | TRS: %d", 
+                gameDate, name, map, kill, death, assist, headshotPercentage, trs);
     }
 
 }
