@@ -65,5 +65,17 @@ public class ValorantManager implements ICRUD {
         return 1;
     }
 
+    @Override
+    public void printData() {
+        System.out.println("총 " + list.size() + "개의 게임 플레이 기록이 있습니다.");
+        System.out.println("========================================================================================");
+        System.out.println(" No |    날짜    |  요원  |   맵   |  K/D/A  | 헤드샷(%) |  TRS ");
+        System.out.println("----------------------------------------------------------------------------------------");
+        int i = 1;
+        for (Valorant item : list) {
+            System.out.println(i + " | " + item.toString());
+            i++;
+        }
+    }
     
 }
