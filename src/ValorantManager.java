@@ -77,5 +77,27 @@ public class ValorantManager implements ICRUD {
             i++;
         }
     }
-    
+
+    // 게임 플레이 기록 수정
+    // 수정할 번호 선택
+    @Override
+    public void updateData(int no) {
+        if (no < 1 || no > list.size()) {
+            System.out.println("잘못된 번호입니다.");
+            return;
+        }
+        
+        Valorant valorant = list.get(no - 1);
+    }
+
+    // 게임 플레이 기록 삭제
+    // 삭제할 번호 선택
+    @Override
+    public void deleteData(int no) {
+        if (no < 1 || no > list.size()) {
+            System.out.println("잘못된 번호입니다.");
+            return;
+        }
+        list.remove(no - 1);
+    }
 }
