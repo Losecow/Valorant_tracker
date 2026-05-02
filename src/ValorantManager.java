@@ -145,4 +145,23 @@ public class ValorantManager implements ICRUD {
         System.out.println("========================================================================================");
     }
 
+    // 부가기능 1: 게임 플레이 기록 검색 (날짜 기준)
+    public void searchByDate(String date) {
+        int count = 0;
+        System.out.println("=======================================================================");
+        System.out.println(" No |    날짜    |  요원  |    맵    |  K/D/A  | 헤드샷(%) | TRS ");
+        System.out.println("-----------------------------------------------------------------------");
+        
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getGameDate().contains(date)) {
+                System.out.printf("%-3d |%s\n", (i + 1), list.get(i).toString());
+                count++;
+            }
+        }
+        
+        System.out.println("=======================================================================");
+        System.out.println("총 " + count + "건 검색됨.");
+        System.out.println("=======================================================================");
+    }
+
 }
