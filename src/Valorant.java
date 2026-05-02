@@ -7,23 +7,23 @@ public class Valorant {
     private int death;
     private int assist;
     private int headshot;
-    private int totalDamage;
     private int headshotPercentage;
     private String gameDate;
+    private int trs; // Tracker Score
 
     public Valorant() {
     }
 
-    public Valorant(String name, String map, int kill, int death, int assist, int headshot, int totalDamage, int headshotPercentage, String gameDate) {
+    public Valorant(String name, String map, int kill, int death, int assist, int headshot, int headshotPercentage, String gameDate, int trs) {
         this.name = name;
         this.map = map;
         this.kill = kill;
         this.death = death;
         this.assist = assist;
         this.headshot = headshot;
-        this.totalDamage = totalDamage;
         this.headshotPercentage = headshotPercentage;
         this.gameDate = gameDate;
+        this.trs = trs;
     }
 
     public String getName() { return name; }
@@ -44,13 +44,19 @@ public class Valorant {
     public int getHeadshot() { return headshot; }
     public void setHeadshot(int headshot) { this.headshot = headshot; }
 
-    public int getTotalDamage() { return totalDamage; }
-    public void setTotalDamage(int totalDamage) { this.totalDamage = totalDamage; }
+    public int getTrs() { return trs; }
+    public void setTrs(int trs) { this.trs = trs; }
 
     public int getHeadshotPercentage() { return headshotPercentage; }
     public void setHeadshotPercentage(int headshotPercentage) { this.headshotPercentage = headshotPercentage; }
 
     public String getGameDate() { return gameDate; }
     public void setGameDate(String gameDate) { this.gameDate = gameDate; }
+
+    @Override
+    public String toString() {
+        return String.format("[%s] 요원: %s | 맵: %s | K/D/A: %d/%d/%d | 헤드샷: %d회 (%d%%) | TRS: %d", 
+                gameDate, name, map, kill, death, assist, headshot, headshotPercentage, trs);
+    }
 
 }
