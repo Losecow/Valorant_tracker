@@ -50,8 +50,9 @@ public class Valorant {
 
     @Override
     public String toString() {
-        return String.format("[%s] 요원: %s | 맵: %s | K/D/A: %d/%d/%d | 헤드샷: %d%% | TRS: %d", 
-                gameDate, name, map, kill, death, assist, headshotPercentage, trs);
+        String kda = String.format("%d/%d/%d", kill, death, assist);
+        return String.format(" %-10s | %-4s | %-5s | %-7s | %-9d | %-3d ", 
+                gameDate, name, map, kda, headshotPercentage, trs);
     }
 
 }

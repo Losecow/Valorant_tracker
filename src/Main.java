@@ -9,7 +9,7 @@ public class Main {
 
     public void run() {
         Scanner sc = new Scanner(System.in);
-        ValorantTrackerManager manager = new ValorantTrackerManager(sc);
+        ValorantManager manager = new ValorantManager(sc);
         int datano;
         boolean quit = false;
 
@@ -69,7 +69,7 @@ public class Main {
                 //     manager.saveFile();
                 //     break;
                 case 0:
-                    manager.saveFile(); // 종료 시 자동 저장
+                    // manager.saveFile(); // 종료 시 자동 저장
                     quit = true;
                     System.out.println("프로그램을 종료합니다.");
                     break;
