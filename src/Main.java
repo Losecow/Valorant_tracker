@@ -22,7 +22,8 @@ public class Main {
             System.out.println("5. 게임 플레이 기록 검색 (Search)");
             System.out.println("6. 게임 플레이 기록 통계 (Most/Min 정렬)");
             System.out.println("7. 헤드샷 비율 필터링 (Filter)");
-            System.out.println("8. 파일에 저장 (Save)");
+            System.out.println("8. 게임 플레이 기록 정렬 (Sort)");
+            System.out.println("9. 파일에 저장 (Save)");
             System.out.println("0. 종료 (Quit)");
             System.out.print("메뉴 선택 > ");
             
@@ -70,6 +71,9 @@ public class Main {
                     manager.filterByHeadshotRate(minHeadshot);
                     break;
                 case 8:
+                    manager.sortData();
+                    break;
+                case 9:
                     System.out.println("파일 저장을 시작합니다 ...");
                     manager.saveFile();
                     break;

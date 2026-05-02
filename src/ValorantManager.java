@@ -294,7 +294,97 @@ public class ValorantManager implements ICRUD {
         System.out.println("=======================================================================");
     }
     
-    // 부가기능 4: 파일 저장
+    // 부가기능 4: 데이터 정렬 기능
+    public void sortData() {
+        if (list.isEmpty()) {
+            System.out.println("데이터가 없습니다.");
+            return;
+        }
+
+        System.out.println("정렬 기준을 선택하세요:");
+        System.out.println("1. 킬(Kill)  2. 데스(Death)  3. 어시스트(Assist)  4. 헤드샷 비율(%)  5. TRS");
+        System.out.print("선택 > ");
+        String criteriaInput = sc.nextLine().trim();
+        int criteria = 0;
+        try {
+            criteria = Integer.parseInt(criteriaInput);
+        } catch (NumberFormatException e) {
+            System.out.println("잘못된 입력입니다.");
+            return;
+        }
+
+        if (criteria < 1 || criteria > 5) {
+            System.out.println("1번부터 5번 사이의 숫자를 입력해주세요.");
+            return;
+        }
+
+        System.out.println("정렬 방식을 선택하세요:");
+        System.out.println("1. 오름차순(asc)  2. 내림차순(desc)");
+        System.out.print("선택 > ");
+        String orderInput = sc.nextLine().trim();
+        int order = 0;
+        try {
+            order = Integer.parseInt(orderInput);
+        } catch (NumberFormatException e) {
+            System.out.println("잘못된 입력입니다.");
+            return;
+        }
+
+        if (order != 1 && order != 2) {
+            System.out.println("1번(오름차순) 또는 2번(내림차순)을 선택해주세요.");
+            return;
+        }
+
+        // 오름차순이면 true, 내림차순이면 false
+        final boolean isAsc = (order == 1);
+
+        // criteria를 오버라이딩하기 위해 final로 선언
+        // 설명: criteria는 정렬 기준이므로 변경되면 안됨, 따라서 final로 선언하여 변경 불가능하게 함
+        final int finalCriteria = criteria;
+
+        // Comparator를 사용한 정렬 로직 구현
+        // Comparator 설명 : 두 객체를 비교하는 인터페이스
+        // new Comparator<Valorant>() { // Valorant 객체를 비교하는 Comparator 객체 생성
+        //     @Override // 오버라이딩
+        //     public int compare(Valorant v1, Valorant v2) { // 두 객체를 비교하는 메서드
+        //         return v1.getKill() - v2.getKill(); // 두 객체의 킬 값을 비교하여 오름차순 정렬
+        //     }
+        // });
+        Collections.sort(list, new Comparator<Valorant>() {
+            @Override
+            public int compare(Valorant v1, Valorant v2) {
+                int result = 0;
+                switch (finalCriteria) {
+                    case 1:
+                        result = Integer.compare(v1.getKill(), v2.getKill());
+                        break;
+                    case 2:
+                        result = Integer.compare(v1.getDeath(), v2.getDeath());
+                        break;
+                    case 3:
+                        result = Integer.compare(v1.getAssist(), v2.getAssist());
+                        break;
+                    case 4:
+                        result = Integer.compare(v1.getHeadshotPercentage(), v2.getHeadshotPercentage());
+                        break;
+                    case 5:
+                        result = Integer.compare(v1.getTrs(), v2.getTrs());
+                        break;
+                }
+                // isAsc가 true면 오름차순, false면 내림차순
+                return isAsc ? result : -result; 
+            }
+        });
+
+        System.out.println("=======================================================================");
+        System.out.println("정렬이 완료되었습니다.");
+        System.out.println("=======================================================================");
+        
+        // 정렬 결과 출력ㄱ
+        printData();
+    }
+
+    // 부가기능 5: 파일 저장
     public void saveFile() {
 
         // 파일 저장 
@@ -315,7 +405,7 @@ public class ValorantManager implements ICRUD {
         }
     }
 
-    // 부가기능 5: 파일 불러오기
+    // 부가기능 6: 파일 불러오기
     public void loadFile() {
 
         // 파일 존재 여부 확인
